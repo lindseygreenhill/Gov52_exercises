@@ -3,7 +3,7 @@
     "path": "~/Desktop/Gov52_exercises/pset_2/week_3_exercises.Rmd",
     "project_path": "pset_2/week_3_exercises.Rmd",
     "type": "r_markdown",
-    "hash": "2561565918",
+    "hash": "3796687882",
     "contents": "",
     "dirty": false,
     "created": 1612993394811.0,
@@ -11,16 +11,16 @@
     "relative_order": 2,
     "properties": {
         "tempName": "Untitled2",
-        "cursorPosition": "49,26",
-        "scrollLine": "44",
+        "cursorPosition": "131,0",
+        "scrollLine": "122",
         "last_setup_crc32": "9061AF75799ae064"
     },
     "folds": "",
-    "lastKnownWriteTime": 1612997308,
+    "lastKnownWriteTime": 1613001458,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1612997314135,
+    "last_content_update": 1613001473437,
     "read_only": false,
     "read_only_alternatives": []
 }
