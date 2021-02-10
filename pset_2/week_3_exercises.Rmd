@@ -1,0 +1,65 @@
+---
+title: "week_3_exercises"
+author: "Lindsey Greenhill"
+date: "2/10/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+```{r}
+
+df <- read.table("http://www.stat.columbia.edu/~gelman/arm/examples/pyth/exercise2.1.dat", header = TRUE)
+
+# using head to get the first 40 observations
+
+df_train <- df %>% head(40)
+
+# using tail to get the last 20 observations
+
+df_test <- df %>% tail(20)
+
+
+fit_1 <- lm(y ~ x1 + x2, data = df_train)
+
+summary(fit_1)
+
+y_vs_x1 <- ggplot(df_train, aes(x = x1, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Y vs x1") +
+  theme_classic()
+
+y_vs_x2 <- ggplot(df_train, aes(x = x2, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+
+# doing risidual plots
+
+x1_fit <- lm(y ~ x1, data = df_train)
+x1_res <- resid(x1_fit)
+x2_fit <- lm(y ~ x2, data = df_train)
+x2_res <- resid(x2_fit)
+
+{
+plot(df_train$x1, x1_res,
+                    ylab = "Residuals",
+                    xlab = "x1",
+                    main = "x1 Residuals")
+abline(0,0)
+}
+
+{
+plot(df_train$x2, x2_res,
+                    ylab = "Residuals",
+                    xlab = "x2",
+                    main = "x2 Residuals")
+abline(0,0)
+}
+```
+
