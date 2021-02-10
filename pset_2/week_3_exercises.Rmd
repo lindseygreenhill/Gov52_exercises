@@ -21,12 +21,20 @@ df_train <- df %>% head(40)
 
 # using tail to get the last 20 observations
 
-df_test <- df %>% tail(20)
+df_test <- df %>% tail(20) %>%
+  select(x1,x2)
 
 
 fit_1 <- lm(y ~ x1 + x2, data = df_train)
 
+
 summary(fit_1)
+
+# the intercept is equal to 1.31, the x1 coefficient is equal to .514, the x2
+# coefficient is equal to .806. In context this means that the average value of
+# y when x1 and x2 are both 0 is 1.31. For every 1 unit increase in x1, y
+# increases by .514 on average, holding x2 constant. For every 1 unit increase
+# in x2, y increased by .806 on average, holding x1 constant. The R squared value is about .97, meaning that the model accounts for about 97% of variation. 
 
 y_vs_x1 <- ggplot(df_train, aes(x = x1, y = y)) +
   geom_point() +
@@ -39,7 +47,9 @@ y_vs_x2 <- ggplot(df_train, aes(x = x2, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   theme_classic()
 
-# doing risidual plots
+# doing residual plots. These plots show the actual values of x1 plotted against
+# the residual of x1 in the above model. The horizontal line is at 0, meaning
+# that the observed x1 and the predicted x1 were the same.
 
 x1_fit <- lm(y ~ x1, data = df_train)
 x1_res <- resid(x1_fit)
@@ -61,5 +71,12 @@ plot(df_train$x2, x2_res,
                     main = "x2 Residuals")
 abline(0,0)
 }
+
+# making predictions for the test data
+
+
+predictions_fit_1 <- predict(fit_1, newdata = df_test)
+
+
 ```
 
