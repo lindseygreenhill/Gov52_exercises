@@ -157,6 +157,3 @@ sum_z <- sum(z.scores >= 2)
 
 Out of the 100 simulations, `r sum_z` estimates are statistically significant. 
 
-
-Out of the 100 simulations, only 
-
