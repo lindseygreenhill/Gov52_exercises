@@ -7,13 +7,14 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(arm)
 library(tidyverse)
 ```
 
 
 ## Question 1
 
-```{r data, echo=FALSE}
+```{r data, include=FALSE}
 
 df <- read.table("http://www.stat.columbia.edu/~gelman/arm/examples/pyth/exercise2.1.dat",
                  header = TRUE)
@@ -33,12 +34,6 @@ fit_1 <- lm(y ~ x1 + x2, data = df_train)
 
 ### Part a
 
-the intercept is equal to 1.31, the x1 coefficient is equal to .514, the x2
-coefficient is equal to .806. In context this means that the average value of
-y when x1 and x2 are both 0 is 1.31. For every 1 unit increase in x1, y
-increases by .514 on average, holding x2 constant. For every 1 unit increase
-in x2, y increased by .806 on average, holding x1 constant. The R squared value is about .97, meaning that the model accounts for about 97% of variation. 
-
 ```{r 1a, echo=FALSE}
 
 # the intercept is equal to 1.31, the x1 coefficient is equal to .514, the x2
@@ -49,7 +44,7 @@ in x2, y increased by .806 on average, holding x1 constant. The R squared value 
 # value is about .97, meaning that the model accounts for about 97% of
 # variation.
 
-summary(fit_1)
+display(fit_1)
 ```
 
 The intercept is equal to 1.31, meaning that the average value of y when x1 and x2 are both 0 is 1.13. The coefficient for x1 is .514, meaning that for every 1 unit increase in x1, y increases by .514 on average,  holding x2 constant. The coefficient for x2 is .806, meaning that for every 1 unit increase in x2, y increases by .806 on average, holding x1 constant. 
@@ -117,33 +112,51 @@ abline(0,0)
 
 # making predictions for the test data
 
-predict(fit_1, newdata = df_test)
+predict(fit_1, newdata = df_test, interval = "prediction")
 
 ```
 
 
 ## Question 3
 
-```{r 3}
+```{r 3a , echo=FALSE}
+
+# this code pretty much all came from the book
+
 var1 <- rnorm(1000,0,1)
 var2 <- rnorm(1000,0,1)
 
 fit_3 <- lm(var1 ~ var2)
 
-se.coef(fit_3)
+# the coefficients are not statistically significant
 
 summary(fit_3)
 
+```
+
+### Part a
+
+The slope is not statistically significant. 
+
+### Part b
+
+```{r 3b, echo=FALSE}
 z.scores <- rep (NA, 100)
 
 for (k in 1:100) { 
   var1 <- rnorm (1000,0,1)
   var2 <- rnorm (1000,0,1) 
   fit <- lm (var2 ~ var1) 
-  #z.scores[k] <- coef(fit)[2] / se.coef(fit)[2]
+  z.scores[k] <- coef(fit)[2] / se.coef(fit)[2]
 } 
 
+# counting the amount of values that are statistically significant
 
-
+sum_z <- sum(z.scores >= 2)
 ```
+
+Out of the 100 simulations, `r sum_z` estimates are statistically significant. 
+
+
+Out of the 100 simulations, only 
 
