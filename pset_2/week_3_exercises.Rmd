@@ -9,6 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(arm)
 library(tidyverse)
+set.seed(126)
 ```
 
 
@@ -51,11 +52,13 @@ The intercept is equal to 1.31, meaning that the average value of y when x1 and 
 
 The R squared value is .97, meaning that about 97% of the variance is explained by the model 
 
+\newpage
+
 ### Part b
 
 The graphs below visualize the relationship between y and x1 and x2. The blue line is the least squared regression line. 
 
-```{r 1b, echo=FALSE}
+```{r 1b, echo=FALSE, message=FALSE}
 
 # plots of y vs x1 and x2
 
@@ -72,6 +75,8 @@ ggplot(df_train, aes(x = x2, y = y)) +
   theme_classic()
 
 ```
+
+\newpage
 
 ### Part c
 
@@ -104,18 +109,39 @@ plot(df_train$x2, x2_res,
 abline(0,0)
 }
 ```
+\newpage
 
 ### Part d
+
+The plots below show the same regression lines shown in part b above. The red points are the predictions generated using the last 20 observations in the data frame. The predictions seem to follow the same general pattern and trend line as the data points used to generate the regression. Therefore, we should be relatively confident that these predictions are reasonable. With that being said, it is worth recognizing that the fits are not perfect representations of reality and the plot for x2 appears to be a closer fit than x1. 
 
 
 ```{r  1d, echo=FALSE}
 
 # making predictions for the test data
 
-predict(fit_1, newdata = df_test, interval = "prediction")
+predictions <- predict(fit_1, newdata = df_test)
+
+new_df <- cbind(predictions, df_test)
+
+
+ggplot(df_train, aes(x = x1, y = y)) +
+  geom_point() +
+  geom_point(data = new_df, aes(x = x1, y = predictions), col = "red") +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Y vs x1 (Predictions)") +
+  theme_classic()
+
+ggplot(df_train, aes(x = x2, y = y)) +
+  geom_point() +
+  geom_point(data = new_df, aes(x = x2, y = predictions), col = "red") +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Y vs  x2 (Predictions)") +
+  theme_classic()
 
 ```
 
+\newpage
 
 ## Question 3
 
@@ -136,7 +162,7 @@ summary(fit_3)
 
 ### Part a
 
-The slope is not statistically significant. 
+The slope is not statistically significant, because it is within 2 standard deviations from 0 (logic taken from Gelman and Hill "if the absolute value of the z-score exceeds 2, the estimate is statistically significant") and there are also no stars in the model output. This makes sense because the variables are random and therefore we do not expect them to have any meaningful relationship. 
 
 ### Part b
 
@@ -152,8 +178,8 @@ for (k in 1:100) {
 
 # counting the amount of values that are statistically significant
 
-sum_z <- sum(z.scores >= 2)
+sum_z <- sum(z.scores > 2 | z.scores < -2)
 ```
 
-Out of the 100 simulations, `r sum_z` estimates are statistically significant. 
+Out of the 100 simulations, `r sum_z` estimates are statistically significant. I determined this by counting how many z scores were greater than 2 or less than -2 (logic taken from Gelman and Hill "if the absolute value of the z-score exceeds 2, the estimate is statistically significant"). 
 
