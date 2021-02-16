@@ -48,15 +48,19 @@ fit_1 <- lm(y ~ x1 + x2, data = df_train)
 display(fit_1)
 ```
 
-The intercept is equal to 1.31, meaning that the average value of y when x1 and x2 are both 0 is 1.13. The coefficient for x1 is .514, meaning that for every 1 unit increase in x1, y increases by .514 on average,  holding x2 constant. The coefficient for x2 is .806, meaning that for every 1 unit increase in x2, y increases by .806 on average, holding x1 constant. 
-
-The R squared value is .97, meaning that about 97% of the variance is explained by the model 
+The intercept is equal to 1.31, meaning that the average value of y when x1 and
+x2 are both 0 is 1.13. The coefficient for x1 is .514, meaning that for every 1
+unit increase in x1, y increases by .514 on average,  holding x2 constant. The
+coefficient for x2 is .806, meaning that for every 1 unit increase in x2, y
+increases by .806 on average, holding x1 constant.
+The R squared value is .97, meaning that about 97% of the variance is explained
+by the model
 
 \newpage
 
 ### Part b
-
-The graphs below visualize the relationship between y and x1 and x2. The blue line is the least squared regression line. 
+The graphs below visualize the relationship between y and x1 and x2. The blue
+line is the least squared regression line.
 
 ```{r 1b, echo=FALSE, message=FALSE}
 
@@ -80,7 +84,13 @@ ggplot(df_train, aes(x = x2, y = y)) +
 
 ### Part c
 
-The plots below show the residuals of the two above models plotted against the observed values from the data frame. For the x1 plot, the residuals seem to be relatively evenly spread throughout the x1 values with no clear patterns emerging. For the x2 plot, the residuals seems to be larger for the x2 values closer to 0. However, the residuals for x2 seem to be smaller on average  than the residuals for x1. 
+The plots below show the residuals of the two above models plotted against the
+observed values from the data frame. For the x1 plot, the residuals seem to be
+relatively evenly spread throughout the x1 values with no clear patterns
+emerging. For the x2 plot, the residuals seems to be larger for the x2 values
+closer to 0. However, the residuals for x2 seem to be smaller on average  than
+the residuals for x1. The residuals do not seem to violent any assumptions of
+linearity.
 
 ```{r 1c, echo=FALSE}
 
@@ -113,10 +123,16 @@ abline(0,0)
 
 ### Part d
 
-The plots below show the same regression lines shown in part b above. The red points are the predictions generated using the last 20 observations in the data frame. The predictions seem to follow the same general pattern and trend line as the data points used to generate the regression. Therefore, we should be relatively confident that these predictions are reasonable. With that being said, it is worth recognizing that the fits are not perfect representations of reality and the plot for x2 appears to be a closer fit than x1. 
+The plots below show the same regression lines shown in part b above. The red
+points are the predictions generated using the last 20 observations in the data
+frame. The predictions seem to follow the same general pattern and trend line as
+the data points used to generate the regression. Therefore, we should be
+relatively confident that these predictions are reasonable. With that being
+said, it is worth recognizing that the fits are not perfect representations of
+reality and the plot for x2 appears to be a closer fit than x1.
 
 
-```{r  1d, echo=FALSE}
+```{r  1d, echo=FALSE, message=FALSE}
 
 # making predictions for the test data
 
@@ -162,7 +178,11 @@ summary(fit_3)
 
 ### Part a
 
-The slope is not statistically significant, because it is within 2 standard deviations from 0 (logic taken from Gelman and Hill "if the absolute value of the z-score exceeds 2, the estimate is statistically significant") and there are also no stars in the model output. This makes sense because the variables are random and therefore we do not expect them to have any meaningful relationship. 
+The slope is not statistically significant, because it is within 2 standard
+deviations from 0 (logic taken from Gelman and Hill "if the absolute value of
+the z-score exceeds 2, the estimate is statistically significant") and there are
+also no stars in the model output. This makes sense because the variables are
+random and therefore we do not expect them to have any meaningful relationship.
 
 ### Part b
 
@@ -181,5 +201,8 @@ for (k in 1:100) {
 sum_z <- sum(z.scores > 2 | z.scores < -2)
 ```
 
-Out of the 100 simulations, `r sum_z` estimates are statistically significant. I determined this by counting how many z scores were greater than 2 or less than -2 (logic taken from Gelman and Hill "if the absolute value of the z-score exceeds 2, the estimate is statistically significant"). 
+Out of the 100 simulations, `r sum_z` estimates are statistically significant. I
+determined this by counting how many z scores were greater than 2 or less than
+-2 (logic taken from Gelman and Hill "if the absolute value of the z-score
+exceeds 2, the estimate is statistically significant").
 
